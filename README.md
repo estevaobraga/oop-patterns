@@ -21,7 +21,7 @@
 <summary>Encapsulation</summary>
 <a name="encapsulation"></a>
 
-    Encapsulation is a way to restrict the direct access to some components of an object, so users cannot access state values for all of the variables of a particular object. Encapsulation can be used to hide both data members and data functions or methods (implementation details) associated with an instantiated class or object.  
+Encapsulation is a way to restrict the direct access to some components of an object, so users cannot access state values for all of the variables of a particular object. Encapsulation can be used to hide both data members and data functions or methods (implementation details) associated with an instantiated class or object.  
 
 ```python
 class Temperature:
@@ -68,8 +68,8 @@ temp.set_celsius(-300)  # Output: Temperature cannot be below absolute zero!
 <summary>Abstraction</summary>
 <a name="abstraction"></a>
 
-    Abstraction refers to the concept of hiding the complex implementation details and showing only the essential features of an object. In other words, abstraction allows you to focus on what an object does rather than how it does it.
-    Abstraction is about hiding complexity and showing only the essential features.
+Abstraction refers to the concept of hiding the complex implementation details and showing only the essential features of an object. In other words, abstraction allows you to focus on what an object does rather than how it does it.
+Abstraction is about hiding complexity and showing only the essential features.
 
 
 
@@ -112,7 +112,7 @@ myCat.makeSound() // Output: Meow!
 <summary>Inheritance</summary>
 <a name="inheritance"></a>
 
-    Inheritance allows a class (called a child class or subclass) to inherit properties and methods from another class (called a parent class or superclass). This promotes code reusability and establishes a hierarchical relationship between classes.
+Inheritance allows a class (called a child class or subclass) to inherit properties and methods from another class (called a parent class or superclass). This promotes code reusability and establishes a hierarchical relationship between classes.
 
 ```Dart
 // Parent class
@@ -168,7 +168,7 @@ write explanation here...
 <summary>Polymorphism</summary>
 <a name="polymorphism"></a>
 
-    Polymorphism allows objects of different classes to be treated as objects of a common superclass. The term "polymorphism" comes from Greek, meaning "many forms." In OOP, it refers to the ability of a single function, method, or operator to work in different ways depending on the context.
+Polymorphism allows objects of different classes to be treated as objects of a common superclass. The term "polymorphism" comes from Greek, meaning "many forms." In OOP, it refers to the ability of a single function, method, or operator to work in different ways depending on the context.
 
 - **Compile-time Polymorphism (Method Overloading):** This is achieved by defining multiple methods with the same name but different parameters.
 
@@ -204,7 +204,7 @@ fun main() {
 <summary>Coupling</summary>
 <a name="coupling"></a>
 
-    Coupling measures how closely two classes are connected or dependent on each other. High coupling means that classes are tightly interconnected, making the system harder to maintain, modify, and test.
+Coupling measures how closely two classes are connected or dependent on each other. High coupling means that classes are tightly interconnected, making the system harder to maintain, modify, and test.
 
 **Benefits of Loose Coupling:**
 **Flexibility:** You can easily replace or modify components without affecting other parts of the system.
