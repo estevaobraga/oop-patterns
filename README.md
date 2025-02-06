@@ -28,6 +28,7 @@
 Encapsulation is a way to restrict the direct access to some components of an object, so users cannot access state values for all of the variables of a particular object. Encapsulation can be used to hide both data members and data functions or methods (implementation details) associated with an instantiated class or object.  
 
 ```python
+#python example
 class Temperature:
     def __init__(self):
         # Private attribute (convention: prefix with underscore)
@@ -80,6 +81,7 @@ Abstraction is about hiding complexity and showing only the essential features.
 - **Interfaces/Protocols:** Define a contract for what methods a class should implement without providing the implementation.
 
 ```swift
+// swift example
 // Step 1: Define a protocol (abstract interface)
 protocol Animal {
     func makeSound()
@@ -117,6 +119,7 @@ myCat.makeSound() // Output: Meow!
 Inheritance allows a class (called a child class or subclass) to inherit properties and methods from another class (called a parent class or superclass). This promotes code reusability and establishes a hierarchical relationship between classes.
 
 ```Dart
+// Dart example
 // Parent class
 class Animal {
   String name;
@@ -165,6 +168,8 @@ Composition involves creating complex objects by combining simpler objects or co
 "has-a" relationship.
 
 ```ruby
+# Ruby example
+
 # Define the Car class, which is composed of Engine, Wheels, and Transmission class
 class Car
   def initialize
@@ -210,6 +215,8 @@ Polymorphism allows objects of different classes to be treated as objects of a c
 - **Runtime Polymorphism (Method Overriding):** This is achieved when a subclass provides a specific implementation of a method that is already defined in its superclass.
 
 ```Kotlin
+// Kotlin example
+
 // Superclass
 open class Shape {
     open fun draw() {
@@ -250,6 +257,8 @@ Coupling measures how closely two classes are connected or dependent on each oth
 **Bad pratice**
 Coupling Example:
 ```ruby
+# Ruby example
+
 class Car
   def initialize
     @engine = Engine.new
@@ -273,6 +282,8 @@ car.start
 **Good pratice**
 **Loose Coupling Example:**
 ```Ruby
+# Ruby example
+
 class Car
   def initialize(engine)
     @engine = engine
@@ -350,34 +361,339 @@ car.start
 <details>
 <summary>S: Single Resposability Principle SRP</summary>
 
-explanation here...
+- A class should have only one reason to change, meaning it should have only one job or responsibility.
+- This principle helps to keep classes focused and manageable.
+
+**Problem: Violation of SRP**
+The `User` class has two responsibilities:
+
+- Managing user data.
+- Saving the user to a database.
+- Sending an email.
+
+**Solution: Applying SRP**
+We can refactor the code to separate the responsibilities into different classes or modules:
+
+```javascript
+// JavaScript example
+
+class User {
+  constructor(name, email) {
+    this.name = name;
+    this.email = email;
+  }
+}
+
+class UserRepository {
+  save(user) {
+    // Logic to save user to a database
+    console.log(`Saving user ${user.name} to the database...`);
+  }
+}
+
+class EmailService {
+  sendEmail(user) {
+    // Logic to send an email to the user
+    console.log(`Sending email to ${user.email}...`);
+  }
+}
+
+// Usage
+const user = new User("John", "john@example.com");
+const userRepository = new UserRepository();
+const emailService = new EmailService();
+
+userRepository.save(user);
+emailService.sendEmail(user);
+```
 
 </details>
 
 <details>
 <summary>O: Open-Closed Principle OCP</summary>
 
-explanation here...
+- Software entities (classes, modules, functions, etc.) should be open for extension but closed for modification.
+
+- This means you should be able to add new functionality without altering existing code, promoting the use of abstractions and interfaces.
+
+**Problem: Violation of OCP**
+
+```csharp
+// C# example
+public class ReportGenerator
+{
+    public void GenerateReport(string reportType)
+    {
+        if (reportType == "PDF")
+        {
+            Console.WriteLine("Generating PDF Report...");
+        }
+        else if (reportType == "Excel")
+        {
+            Console.WriteLine("Generating Excel Report...");
+        }
+        // If we need to add a new report type (e.g., "Word"), we have to modify this class.
+    }
+}
+```
+In this example, the `ReportGenerator` `class` violates OCP because if we want to add a new report type (e.g., "Word"), we have to modify the `GenerateReport` `method`. This makes the code harder to maintain and less flexible.
+
+**Solution: Applying OCP**
+```csharp
+// C# example
+
+// Define an interface for all report generators
+public interface IReportGenerator
+{
+    void GenerateReport();
+}
+
+// PDF Report Generator
+public class PdfReportGenerator : IReportGenerator
+{
+    public void GenerateReport()
+    {
+        Console.WriteLine("Generating PDF Report...");
+    }
+}
+
+// Excel Report Generator
+public class ExcelReportGenerator : IReportGenerator
+{
+    public void GenerateReport()
+    {
+        Console.WriteLine("Generating Excel Report...");
+    }
+}
+
+// Word Report Generator (added later without modifying existing code)
+public class WordReportGenerator : IReportGenerator
+{
+    public void GenerateReport()
+    {
+        Console.WriteLine("Generating Word Report...");
+    }
+}
+
+// Report Generator class that works with any IReportGenerator
+public class ReportGenerator
+{
+    public void GenerateReport(IReportGenerator reportGenerator)
+    {
+        reportGenerator.GenerateReport();
+    }
+}
+
+// Usage
+class Program
+{
+    static void Main(string[] args)
+    {
+        var pdfReport = new PdfReportGenerator();
+        var excelReport = new ExcelReportGenerator();
+        var wordReport = new WordReportGenerator(); // New report type added without modifying existing code
+
+        var reportGenerator = new ReportGenerator();
+
+        reportGenerator.GenerateReport(pdfReport);  // Output: Generating PDF Report...
+        reportGenerator.GenerateReport(excelReport); // Output: Generating Excel Report...
+        reportGenerator.GenerateReport(wordReport);  // Output: Generating Word Report...
+    }
+}
+```
+
+- `IReportGenerator` Interface: Defines a contract for all report generators, requiring them to implement a `GenerateReport` `method`.
+
+- `PdfReportGenerator` and `ExcelReportGenerator` Classes: Implement the `IReportGenerator` interface and provide their own logic for generating reports.
+
+- `WordReportGenerator` Class: Added later without modifying the existing `ReportGenerator` class.
+
+- `ReportGenerator` Class: Works with any report generator that implements the `IReportGenerator` interface. It doesn’t need to be modified when new report types are added.
 
 </details>
 
 <details>
-<summary>Liskov Substitution Principle (`LSP`)</summary>
+<summary>Liskov Substitution Principle LSP</summary>
 
-explanation here...
+- Objects of a superclass should be replaceable with objects of a subclass without affecting the correctness of the program.
+
+- This principle ensures that a subclass can stand in for its superclass without causing unexpected behavior.
+
+**Problem: Violation of LSP**
+example:
+
+- The `Bird` class has a fly method, assuming all birds can fly.
+
+- The `Ostrich` class extends `Bird` but overrides the fly method to `throw` an exception because ostriches cannot fly.
+
+- This violates LSP because an `Ostrich` object cannot be substituted for a `Bird` object without breaking the program (it `throws` an exception).
+
+**Solution: Applying LSP**
+
+- To adhere to LSP, we need to ensure that subclasses can be used in place of their superclass without causing unexpected behavior. One way to fix this is by restructuring the class hierarchy to reflect the correct behavior.
+
+```java
+// Java example
+
+// Base class for all birds
+class Bird {
+    // Common bird behavior
+}
+
+// Interface for birds that can fly
+interface Flyable {
+    void fly();
+}
+
+// Sparrow is a bird that can fly
+class Sparrow extends Bird implements Flyable {
+    @Override
+    public void fly() {
+        System.out.println("Sparrow is flying...");
+    }
+}
+
+// Ostrich is a bird that cannot fly
+class Ostrich extends Bird {
+    // Ostrich-specific behavior
+    public void run() {
+        System.out.println("Ostrich is running...");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Flyable sparrow = new Sparrow();
+        sparrow.fly(); // Output: Sparrow is flying...
+
+        Ostrich ostrich = new Ostrich();
+        ostrich.run(); // Output: Ostrich is running...
+
+        // Now, Ostrich is not forced to implement fly(), and the program works as expected.
+    }
+}
+```
+
+- `Bird` Class: Acts as a base class for all birds, containing common behavior.
+
+- `Flyable` Interface: Defines the `fly` method for birds that can fly.
+
+- `Sparrow` Class: Extends Bird and implements `Flyable` because sparrows can fly.
+
+- `Ostrich` Class: Extends Bird but does not implement `Flyable` because ostriches cannot fly. Instead, it has its own behavior (`run`).
 
 </details>
 
 <details>
-<summary>I: Interface Segregration Principal (`ISP`)</summary>
+<summary>I: Interface Segregration Principal ISP</summary>
 
-explanation here...
+- Clients should not be forced to depend on interfaces they do not use.
+- This principle encourages the creation of smaller, more specific interfaces rather than large, general-purpose ones.
 
+**Problem: Violation of ISP**
+
+- The `Worker` interface has two methods: `work` and `eat`.
+
+- The `HumanWorker` class implements both methods because humans can work and eat.
+
+- The `RobotWorker` class is forced to implement the `eat` method, even though robots don’t eat. This violates ISP because the `RobotWorker` depends on an interface method it doesn’t use.
+
+**Solution: Applying ISP**
+
+- To adhere to ISP, we can split the Worker interface into smaller, more specific interfaces. This way, classes only implement the methods they need.
+
+- `Workable` Interface: Defines the `work` method for workers who can work.
+- `Eatable` Interface: Defines the `eat` method for workers who can eat.
+- `HumanWorker` Class: Implements both `Workable` and `Eatable` because humans can work and eat.
+- `RobotWorker` Class: Implements only `Workable` because robots don’t eat.
 </details>
 
 <details>
-<summary>D: Dependency Inversion Principal (`DIP`)</summary>
+<summary>D: Dependency Inversion Principal DIP</summary>
 
-explanation here...
+- High-level modules should not depend on low-level modules. Both should depend on abstractions.
+- Abstractions should not depend on details. Details should depend on abstractions.
+- This principle promotes the decoupling of software modules, making the system more modular and easier to maintain.
+
+```cpp
+// C++ example
+
+#include <iostream>
+using namespace std;
+
+// Abstraction (interface)
+class Switchable {
+public:
+    virtual void turnOn() = 0;
+    virtual void turnOff() = 0;
+    virtual ~Switchable() = default; // Virtual destructor for proper cleanup
+};
+
+// Low-level module
+class LightBulb : public Switchable {
+public:
+    void turnOn() override {
+        cout << "LightBulb: Turned ON" << endl;
+    }
+
+    void turnOff() override {
+        cout << "LightBulb: Turned OFF" << endl;
+    }
+};
+
+// Another low-level module
+class Fan : public Switchable {
+public:
+    void turnOn() override {
+        cout << "Fan: Turned ON" << endl;
+    }
+
+    void turnOff() override {
+        cout << "Fan: Turned OFF" << endl;
+    }
+};
+
+// High-level module
+class Switch {
+private:
+    Switchable& device; // Depends on abstraction, not a concrete implementation
+public:
+    Switch(Switchable& device) : device(device) {}
+
+    void operate(bool on) {
+        if (on) {
+            device.turnOn();
+        } else {
+            device.turnOff();
+        }
+    }
+};
+
+// Usage
+int main() {
+    LightBulb bulb;
+    Fan fan;
+
+    Switch lightSwitch(bulb);
+    lightSwitch.operate(true);  // Output: LightBulb: Turned ON
+    lightSwitch.operate(false); // Output: LightBulb: Turned OFF
+
+    Switch fanSwitch(fan);
+    fanSwitch.operate(true);  // Output: Fan: Turned ON
+    fanSwitch.operate(false); // Output: Fan: Turned OFF
+
+    return 0;
+}
+```
+
+- `Switchable` Interface: Acts as an abstraction that both high-level and low-level modules depend on.
+
+- `LightBulb` and `Fan` Classes: Implement the Switchable interface, providing their own implementations of `turnOn` and `turnOff`.
+
+- `Switch` Class: Depends on the `Switchable` interface instead of a concrete implementation. This makes it flexible and reusable for any device that implements `Switchable`.
 
 </details>
+
+<br/>  
+
+# Design Patterns
